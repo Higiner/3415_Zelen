@@ -7,7 +7,7 @@
 
 * Базовые карты:
   * 5 карт цены.
-  * 5 карт рынка(баклажан, кукуруза, помидоры, брокколи, морковь).
+  * 5 карт рынка(бульба, кукуруза, томаты, огурец, морковь).
   * карты овощей, на каждой изображены 3 случайных зелень.
 * Специальные карты: 
   * Солнышко - добавьте ещё одну карту овощей в дополнение к обычному ряду. В этом раунде 2 последние карты меняют цену овощей на рынке
@@ -42,45 +42,47 @@
 Играют Alex и Bob.
 
 ```
-Price: Corn - 0; Eggplant - 1; Broccoli - 2; Tomato - 3;
-Vegetable card:
-1) Tomato - 3
-2) Corn - 1; Tomato - 2
-3) Corn - 1; Broccoli - 2
-Alex: Corn - 0; Eggplant - 0; Broccoli - 0; Tomato - 0;
+Раунд: 1
+Цены: к0о1б2т3
+Карты овощей:
+1) ттт
+2) ктт
+3) кбб
+Alex: к0о0б0т0
 Alex: введите какую карту взять
 Alex: 4
 Alex: такой карты нет
 Alex: 3
-Alex: Corn - 1; Eggplant - 0; Broccoli - 2; Tomato - 0;
+Alex: к1о0б2т0
 -----
-Price: Corn - 0; Eggplant - 1; Broccoli - 2; Tomato - 3;
+Раунд: 1
+Цены: к0о1б2т3
 Vegetable card:
-1) Tomato - 3
-2) Corn - 1; Tomato - 2
-Bob: Corn - 0; Eggplant - 0; Broccoli - 0; Tomato - 0
+1) ттт
+2) ктт
+Bob: к0о0б0т0
 Bob: 2
-Bob: Corn - 1; Eggplant - 0; Broccoli - 0; Tomato - 2
-Price: Corn - 0; Eggplant - 1; Broccoli - 2; Tomato - 0;
+Bob: к1о0б0т2
+Цены: к0о1б2т0
 -----
-Price: Corn - 0; Eggplant - 1; Broccoli - 2; Tomato - 0;
-Vegetable card: 
-1) Broccoli - 2; Tomato - 1
-2) Corn - 2; Broccoli- 1
-3) Broccoli - 2; Tomato - 1
-Bob: Corn - 1; Eggplant - 0; Broccoli - 0; Tomato - 2
-Bob: 1
-Bob: Corn - 1; Eggplant - 0; Broccoli - 2; Tomato - 1
-Price: Corn - 2; Eggplant - 2; Broccoli- 2; Tomato - 0;
+Раунд: 2
+Цены: к0о1б2т0
+Карты овощей: 
+1) ббт
+2) ккб
+3) ббт
+Alex: к1о0б2т0
+Alex: 1
+Alex: к1о0б4т1
 -----
-Price: Corn - 0; Eggplant - 1; Broccoli - 2; Tomato - 0;
-Vegetable card: 
-1) Corn - 2; Broccoli -1
-2) Broccoli - 2; Tomato - 1
-Alex: Corn - 1; Eggplant - 0; Broccoli - 2; Tomato - 0;
-Alex: 2
-Alex: Corn - 1; Eggplant - 0; Broccoli - 4; Tomato - 1;
-Price: Corn - 2; Eggplant - 2; Broccoli- 3; Tomato - 0;
+Цены: к0о1б2т0;
+Карты овощей: 
+1) ккб
+2) ббт
+Bob: к1о0б0т2;
+Bob: 2
+Bob: к1о0б2т3;
+Цены: к4о2б3т0;
 ....
 -----
 Bob WIN!
@@ -90,21 +92,17 @@ Bob WIN!
 
 ```json
 {
-  "Price": "Corn - 0; Eggplant - 1; Broccoli - 2; Tomato - 0;",
-  "Vegetable card": [
-    "1) Corn - 2; Broccoli - 1",
-    "2) Broccoli - 2; Tomato - 1"
-  ],
-  "current_player_index": 1,
+  "Price": "к4о2б3т0",
+  "Round": 1,
   "players": [
   {
       "name": "Alex",
-      "hand": "Corn - 1; Eggplant - 0; Broccoli - 2; Tomato - 0;",
+      "hand": "к1о0б4т1;",
       "is_human": true
     },
     {
       "name": "Bob",
-      "hand": "Corn - 1; Eggplant - 0; Broccoli - 2; Tomato - 1",
+      "hand": "к1о0б2т3",
       "is_human": false
     }
   ]
