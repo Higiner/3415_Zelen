@@ -28,3 +28,15 @@ def test_score():
     c = Card(т=1, б=2)
     p = Price(1, 5, 3, 2, 4)
     assert c.score(p) == 2 + 2 * 3
+
+def test_all_card():
+    cards = Card.all_cards(['б', 'м'])
+    expected_cards = [
+        Card.load('ббм'),
+        Card.load('бмм'),
+        Card.load('ббб'),
+        Card.load('ббм'),
+        Card.load('бмм'),
+        Card.load('ммм')
+    ]
+    assert cards == expected_cards

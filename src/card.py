@@ -1,8 +1,14 @@
 '''Карты Зелень'''
 
 class Card:
+    vegetables = ['к', 'о', 'б', 'т', 'м']
 
-    def __init__(self, к = 0, о = 0, б = 0, т = 0, м = 0):
+    def __init__(self, к = None, о = None, б= None, т = None, м = None):
+        if к is None: к = 0
+        if о is None: о = 0
+        if б is None: б = 0
+        if т is None: т = 0
+        if м is None: м = 0
         if к + о + б + т + м != 3:
             raise ValueError
         self.к = к
@@ -29,3 +35,13 @@ class Card:
         """From 'ттт' to Card(т=3)"""
         return Card(text.count("к"), text.count("о"), text.count("б"), text.count("т"), text.count("м"))
 
+    @staticmethod
+    def all_cards(vegetables: list[str] | None = None):
+        if vegetables is None:
+            vegetables = Card.vegetables + Card.vegetables
+        cards = [Card.load(veg1 * 2 + veg2 * 1)  for veg1 in vegetables for veg2 in vegetables]
+        cards += [Card.load(veg1 * 2 + veg2 * 1) for veg1 in vegetables for veg2 in vegetables]
+        rm_card = [Card.load(veg * 3) for veg in vegetables]
+        for card in rm_card:
+            cards.remove(card)
+        return cards
