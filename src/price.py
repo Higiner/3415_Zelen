@@ -2,7 +2,12 @@
 
 class Price:
 
-    def __init__(self, к = 0, о = 0, б = 0, т = 0, м = 0):
+    def __init__(self, к = None, о = None, б= None, т = None, м = None):
+        if к is None: к = 0
+        if о is None: о = 0
+        if б is None: б = 0
+        if т is None: т = 0
+        if м is None: м = 0
         if 0 <= к <= 5 and 0 <= о <= 5 and 0 <= б <= 5 and 0 <= т <= 5 and 0 <= м <= 5 :
             self.к = к
             self.о = о
