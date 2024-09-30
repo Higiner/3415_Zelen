@@ -13,10 +13,11 @@ class Deck:
     def __repr__(self):
         return self.save()
 
-    def full_deck(self, veg: str):
-        rm_card = Card.all_cards(veg)
-        for card in rm_card:
-            self.cards.remove(card)
+    def remove_veg(self, veg: str):
+        cards = Card.all_cards()
+        for card in cards:
+            if veg in repr(card):
+                cards.remove(card)
 
     def save(self):
         scards = [c.save() for c in self.cards]

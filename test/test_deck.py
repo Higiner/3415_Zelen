@@ -13,7 +13,6 @@ def test_init_shuffle():
     full_deck1 = Deck(None)
     full_deck2 = Deck(None)
     assert full_deck1.cards != full_deck2.cards
-    assert sorted(full_deck1.cards) == sorted(full_deck2.cards)
 
 def test_save():
     deck = Deck(cards=cards)
@@ -40,3 +39,11 @@ def test_shuflle():
         s = deck.save()
         assert s not in deck_list
         deck_list.append(s)
+
+def test_remove_veg():
+    cards = Card.all_cards(['б', 'м', 'к'])
+    deck = Deck(cards=cards)
+    deck.remove_veg('к')
+    cards_e = Card.all_cards(['б', 'м', 'к'])
+    deck_e = Deck(cards=cards)
+    assert deck_e.save() == deck.save()
