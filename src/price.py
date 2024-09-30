@@ -1,4 +1,6 @@
 '''Стоимость овощей'''
+from src.const import Const
+
 
 class Price:
 
@@ -8,7 +10,7 @@ class Price:
         if б is None: б = 0
         if т is None: т = 0
         if м is None: м = 0
-        if 0 <= к <= 5 and 0 <= о <= 5 and 0 <= б <= 5 and 0 <= т <= 5 and 0 <= м <= 5 :
+        if all(0 <= veg <= Const.max_price.value for veg in [к, о, б, т, м]):
             self.к = к
             self.о = о
             self.б = б
@@ -25,16 +27,11 @@ class Price:
             and self.т == other.т and self.б == other.б and self.о == other.о
 
     def add(self, card: str):
-        self.к += card.count("к")
-        if self.к + card.count("к"): self.к -= 6
-        self.о += card.count("о")
-        if self.к + card.count("о"): self.о -= 6
-        self.б += card.count("б")
-        if self.к + card.count("б"): self.б -= 6
-        self.т += card.count("т")
-        if self.к + card.count("т"): self.т -= 6
-        self.м += card.count("м")
-        if self.к + card.count("м"): self.м -= 6
+        self.к = (self.к + card.count("к")) % (Const.max_price.value + 1)
+        self.о = (self.о + card.count("о")) % (Const.max_price.value + 1)
+        self.б = (self.б + card.count("б")) % (Const.max_price.value + 1)
+        self.т = (self.т + card.count("т")) % (Const.max_price.value + 1)
+        self.м = (self.м + card.count("м")) % (Const.max_price.value + 1)
 
     def save(self):
         return repr(self)

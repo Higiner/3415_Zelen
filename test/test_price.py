@@ -21,3 +21,8 @@ def test_save():
 def test_load():
     t = "к4о2б3т0м1"
     assert Price.load(t) == Price(4, 2, 3, 0, 1)
+
+def test_add():
+    p = Price(5, 0, 2, 1)
+    p.add("кко")
+    assert p.к == p.о == 1
