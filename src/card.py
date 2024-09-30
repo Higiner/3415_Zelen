@@ -1,4 +1,6 @@
 '''Карты Зелень'''
+from src.const import Const
+
 
 class Card:
     vegetables = ['к', 'о', 'б', 'т', 'м']
@@ -9,7 +11,7 @@ class Card:
         if б is None: б = 0
         if т is None: т = 0
         if м is None: м = 0
-        if к + о + б + т + м != 3:
+        if к + о + б + т + м != Const.max_veg.value:
             raise ValueError
         self.к = к
         self.о = о
@@ -24,8 +26,8 @@ class Card:
         return self.к == other.к and self.м == other.м \
             and self.т == other.т and self.б == other.б and self.о == other.о
 
-    def score(self, other):
-        return self.к * other.к + self.о * other.о + self.б * other.б + self.т * other.т + self.м * other.м
+    def score(self, price):
+        return self.к * price.к + self.о * price.о + self.б * price.б + self.т * price.т + self.м * price.м
 
     def save(self):
         return repr(self)
@@ -40,8 +42,8 @@ class Card:
         if vegetables is None:
             vegetables = Card.vegetables + Card.vegetables
         cards = [Card.load(veg1 * 2 + veg2 * 1)  for veg1 in vegetables for veg2 in vegetables]
-        cards += [Card.load(veg1 * 2 + veg2 * 1) for veg1 in vegetables for veg2 in vegetables]
-        rm_card = [Card.load(veg * 3) for veg in vegetables]
+        cards += cards.copy()
+        rm_card = [Card.load(veg * Const.max_veg.value) for veg in vegetables]
         for card in rm_card:
             cards.remove(card)
         return cards
