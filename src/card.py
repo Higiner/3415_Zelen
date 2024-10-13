@@ -38,9 +38,9 @@ class Card:
         return Card(text.count("к"), text.count("о"), text.count("б"), text.count("т"), text.count("м"))
 
     @staticmethod
-    def all_cards(vegetables: list[str] | None = None):
+    def all_cards(vegetables: list[str] | None):
         if vegetables is None:
-            vegetables = Card.vegetables + Card.vegetables
+            vegetables = Card.vegetables
         cards = [Card.load(veg1 * 2 + veg2 * 1)  for veg1 in vegetables for veg2 in vegetables]
         cards += cards.copy()
         rm_card = [Card.load(veg * Const.max_veg.value) for veg in vegetables]
