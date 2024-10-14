@@ -20,14 +20,19 @@ class Card:
         self.м = м
 
     def __repr__(self):
-        return "к" * self.к + "о" * self.о + "б" * self.б + "т" * self.т + "м" * self.м
+        return ''.join(v * getattr(self, v) for v in self.vegetables)
 
     def __eq__(self, other):
-        return self.к == other.к and self.м == other.м \
-            and self.т == other.т and self.б == other.б and self.о == other.о
+        for v in self.vegetables:
+            if getattr(self, v) != getattr(other, v):
+                return False
+        return True
 
     def score(self, price):
-        return self.к * price.к + self.о * price.о + self.б * price.б + self.т * price.т + self.м * price.м
+        total = 0
+        for v in self.vegetables:
+            total += getattr(self, v) * getattr(price, v)
+        return total
 
     def save(self):
         return repr(self)
