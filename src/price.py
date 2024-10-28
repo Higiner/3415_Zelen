@@ -1,22 +1,25 @@
 '''Стоимость овощей'''
+from random import choice
 from src.const import Const
 
 
 class Price:
+    vegetables = ['к', 'о', 'б', 'т', 'м']
 
-    def __init__(self, к = None, о = None, б= None, т = None, м = None):
-        if к is None: к = 0
-        if о is None: о = 0
-        if б is None: б = 0
-        if т is None: т = 0
-        if м is None: м = 0
-        if all(0 <= veg <= Const.max_price.value for veg in [к, о, б, т, м]):
-            self.к = к
-            self.о = о
-            self.б = б
-            self.т = т
-            self.м = м
+    def __init__(self, к=None, о=None, б=None, т=None, м=None):
+        if all(veg is None for veg in [к, о, б, т, м]):
+            num = [0, 1, 2, 3, 4]
+            for veg in self.vegetables:
+                setattr(self, veg, choice(num))
+                num.remove(getattr(self, veg))
         else:
+            veg = [к, о, б, т, м]
+            for i in range(5):
+                if veg[i] is None:
+                    setattr(self, self.vegetables[i], 0)
+                else:
+                    setattr(self, self.vegetables[i], veg[i])
+        if not all(0 <= getattr(self, veg) <= 5 for veg in self.vegetables):
             raise ValueError
 
     def __repr__(self):

@@ -8,6 +8,9 @@ def test_init():
     assert p.о == 1
     assert p.б == 2
     assert p.т == 3
+    p1 = Price()
+    p2 = Price()
+    assert p1 != p2
 
 def test_validation():
     with pytest.raises(ValueError):
