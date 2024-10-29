@@ -19,7 +19,7 @@ class Price:
                     setattr(self, self.vegetables[i], 0)
                 else:
                     setattr(self, self.vegetables[i], veg[i])
-        if not all(0 <= getattr(self, veg) <= 5 for veg in self.vegetables):
+        if not all(0 <= getattr(self, veg) <= Const.max_price for veg in self.vegetables):
             raise ValueError
 
     def __repr__(self):
