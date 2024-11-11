@@ -1,12 +1,13 @@
 import random
 
 from src.card import Card
+from src.const import Const
 
 
 class Deck:
     def __init__(self, cards: None | list[Card]):
         if cards is None:
-            cards = Card.all_cards()
+            cards = Card.all_cards(None)
             random.shuffle(cards)
         self.cards: list[Card] = cards
 
@@ -14,10 +15,11 @@ class Deck:
         return self.save()
 
     def remove_veg(self, veg: str):
-        cards = Card.all_cards()
-        for card in cards:
+        self.cards.remove(Card.load(veg*Const.max_veg.value))
+        for card in self.cards:
             if veg in repr(card):
-                cards.remove(card)
+                self.cards.remove(card)
+                self.cards.remove(card)
 
     def save(self):
         scards = [c.save() for c in self.cards]

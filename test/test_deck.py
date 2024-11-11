@@ -44,6 +44,6 @@ def test_remove_veg():
     cards = Card.all_cards(['б', 'м', 'к'])
     deck = Deck(cards=cards)
     deck.remove_veg('к')
-    cards_e = Card.all_cards(['б', 'м', 'к'])
-    deck_e = Deck(cards=cards)
+    cards_e = Card.all_cards(['б', 'м'])
+    deck_e = Deck(cards=cards_e)
     assert deck_e.save() == deck.save()
