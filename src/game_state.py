@@ -1,13 +1,16 @@
+from src.card import Card
 from src.deck import Deck
 from src.player import Player
 from src.price import Price
 
 class GameState:
-    def __init__(self, players: list[Player], deck: Deck, price: Price, current_player: int = 0, nround: int = 1):
+    def __init__(self, players: list[Player], deck: Deck, price: Price, cards: list[Card],
+                 current_player: int = 0, nround: int = 1):
         self.players: list[Player] = players
         self.deck: Deck = deck
         self._current_player: int = current_player
         self.price = price
+        self.cards: list[Card] = cards
         self.nround = nround
 
 
@@ -23,6 +26,8 @@ class GameState:
             return False
         if self.price != other.price:
             return False
+        if self.cards != other.cards:
+            return False
         if self.nround != other.nround:
             return False
         return True
@@ -33,18 +38,21 @@ class GameState:
             "Deck":str(self.deck),
             "Round": self.nround,
             "current_player_index": self._current_player,
+            "cards": [c.save() for c in self.cards],
             "players": [p.save() for p in self.players]
         }
 
     @classmethod
     def load(cls, data: dict):
         players = [Player.load(d) for d in data["players"]]
+        cards = [Card.load(c) for c in data["cards"]]
 
         return cls(
             players=players,
             deck=Deck.load(data["Deck"]),
             price=Price.load(data["Price"]),
             current_player=int(data["current_player_index"]),
+            cards=cards,
             nround=int(data["Round"])
         )
 
