@@ -10,12 +10,15 @@ class Human(PlayerInteraction):
             cls, price: Price, cards: list[Card]
     ) -> Card:
         while True:
-            numb = input('Выберите карту')
-            card = Card.load(numb)
-            if card in cards:
-                return card
-            else:
-                print('Нельзя взять эту карту')
+            numb = input('Выберите карту ')
+            try:
+                card = Card.load(numb)
+                if card in cards:
+                    return card
+                else:
+                    print('Нельзя взять эту карту')
+            except ValueError:
+                print('Polzuites russkoi rascladcoi')
 
     @classmethod
     def inform_card_drawn(cls, player: Player):
