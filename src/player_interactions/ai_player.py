@@ -9,12 +9,7 @@ class Bot(PlayerInteraction):
     def choose_card(
             cls, price : Price, cards: list[Card]
     ) -> Card:
-        best_card_price = 0
-        best_card = None
-        for card in cards:
-            if card.score(price) > best_card_price:
-                best_card_price = card.score(price)
-                best_card = card
+        best_card = max(cards, key=lambda card: card.score(price) )
         return best_card
 
     @classmethod
