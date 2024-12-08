@@ -73,8 +73,8 @@ class GameServer:
             current_phase = phases[current_phase]()
 
     def new_round(self) -> GamePhase:
-        self.game_state.price.add(self.game_state.cards[0].save())
-        self.game_state.cards.pop()
+        card = self.game_state.cards.pop()
+        self.game_state.price.add(card)
         for _ in range(len(self.game_state.players) + 1):
             self.game_state.cards.append(self.game_state.deck.draw_card())
         self.game_state.nround += 1
