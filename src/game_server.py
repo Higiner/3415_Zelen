@@ -1,5 +1,6 @@
 import inspect
 import enum
+import json
 
 from src.deck import Deck
 from src.hand import Hand
@@ -18,13 +19,25 @@ class GamePhase(enum.StrEnum):
     GAME_END = "Game ended"
 
 class GameServer:
+    NROUNDS = 7
+
     def __init__(self, player_types, game_state):
         self.game_state = game_state
         self.player_types = player_types
 
     @classmethod
     def load_game(cls):
-        pass
+        filename = 'zelen.json'
+        with open(filename, 'r', encoding='utf-8') as fin:
+            data = json.load(fin)
+            game_state = GameState.load(data)
+            print(game_state.save())
+            player_types = {}
+            for player, player_data in zip(game_state.players, data['players']):
+                kind = player_data['kind']
+                kind = getattr(all_player_types, kind)
+                player_types[player] = kind
+            return GameServer(player_types=player_types, game_state=game_state)
 
     @classmethod
     def new_game(cls):
@@ -81,7 +94,7 @@ class GameServer:
         return GamePhase.NEXT_PLAYER
 
     def next_player_phase(self) -> GamePhase:
-        if self.game_state.nround == 7:
+        if self.game_state.nround == self.NROUNDS:
             return GamePhase.DECLARE_WINNER
         if len(self.game_state.cards) == 1:
             return GamePhase.NEW_ROND
@@ -90,12 +103,7 @@ class GameServer:
         return GamePhase.CHOOSE_CARD
 
     def declare_winner_phase(self) -> GamePhase:
-        max_score = 0
-        winner = None
-        for player in self.game_state.players:
-            if player.hand.score(self.game_state.price) > max_score:
-                max_score = player.hand.score(self.game_state.price)
-                winner = player
+        winner = max(self.game_state.players, key= lambda player: player.hand.score(self.game_state.price))
         print(f"{winner.name} is the winner!")
         return GamePhase.GAME_END
 
@@ -103,7 +111,7 @@ class GameServer:
     def request_player_count() -> int:
         while True:
             try:
-                player_count = int(input("How many players?"))
+                player_count = int(input("How many players?" ))
                 if 2 <= player_count <= 6:
                     return player_count
             except ValueError:
@@ -113,14 +121,14 @@ class GameServer:
     @staticmethod
     def request_player() -> (str, PlayerInteraction):
         while True:
-            name = input("How to call a player?")
+            name = input("How to call a player? ")
             if name.isalpha():
                 break
             print("Name must be a single word, alphabetic characters only")
 
         while True:
             try:
-                kind = input("What kind of player is it (Bot, Human, etc.)?")
+                kind = input("What kind of player is it (Bot, Human, etc.)? ")
                 kind = getattr(all_player_types, kind)
                 break
             except AttributeError:
@@ -132,7 +140,10 @@ class GameServer:
         return name, kind
 
 def __main__():
-    server = GameServer.new_game()
+    try:
+        server = GameServer.load_game()
+    except:
+        server = GameServer.new_game()
     server.run()
 
 if __name__ == "__main__":
