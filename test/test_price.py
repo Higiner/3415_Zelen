@@ -1,6 +1,7 @@
 import pytest
 
 from src.price import Price
+from src.card import Card
 
 def test_init():
     p = Price(0, 1, 2, 3)
@@ -28,4 +29,8 @@ def test_load():
 def test_add():
     p = Price(5, 0, 2, 1)
     p.add("кко")
+    assert p.к == p.о == 1
+    p = Price(5, 0, 2, 1)
+    card = Card.load("кко")
+    p.add(card)
     assert p.к == p.о == 1

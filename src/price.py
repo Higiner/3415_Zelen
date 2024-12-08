@@ -1,6 +1,7 @@
 '''Стоимость овощей'''
 from random import choice
 from src.const import Const
+from src.card import Card
 
 
 class Price:
@@ -29,12 +30,14 @@ class Price:
         return self.к == other.к and self.м == other.м \
             and self.т == other.т and self.б == other.б and self.о == other.о
 
-    def add(self, card: str):
-        self.к = (self.к + card.count("к")) % (Const.max_price.value + 1)
-        self.о = (self.о + card.count("о")) % (Const.max_price.value + 1)
-        self.б = (self.б + card.count("б")) % (Const.max_price.value + 1)
-        self.т = (self.т + card.count("т")) % (Const.max_price.value + 1)
-        self.м = (self.м + card.count("м")) % (Const.max_price.value + 1)
+    def add(self, card: str | Card):
+        if isinstance(card, str):
+            for veg in self.vegetables:
+                setattr(self, veg, (getattr(self, veg) + card.count(veg)) % (Const.max_price.value + 1))
+        else:
+            for veg in self.vegetables:
+                setattr(self, veg, (getattr(self, veg) + getattr(card, veg)) % (Const.max_price.value + 1))
+
 
     def save(self):
         return repr(self)
